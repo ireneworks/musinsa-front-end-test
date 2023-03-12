@@ -8,6 +8,7 @@ import { colors } from "../../styles/colors";
 import getProductList from "../../apis/productListApi";
 import useFilter from "../../hooks/useFilter";
 import { SALE } from "../../services/constants";
+import LoadingBar from "../../components/loadingBar/LoadingBar";
 
 export default function SearchPage() {
   const [isLoading, setIsLoading] = useState(true);
@@ -77,7 +78,7 @@ export default function SearchPage() {
                 brandLinkUrl={product.brandLinkUrl}
               />
             ))}
-          <Observer ref={observerTargetRef}>로딩중</Observer>
+          <Observer ref={observerTargetRef}><LoadingBar/></Observer>
         </ProductContainer>
       </ProductList>
     </>
@@ -90,6 +91,8 @@ const Observer = styled.div`
   margin-top: 24px;
   background: transparent;
   text-align: center;
+
+
 `;
 
 const ProductContainer = styled.ul`

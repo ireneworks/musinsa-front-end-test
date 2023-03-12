@@ -84,7 +84,7 @@ const AutoComplete = styled.div`
   position: absolute;
   left: 15px;
   right: 15px;
-  height: 160px;
+  max-height: 160px;
   background: ${colors.white};
   border: 1px solid ${colors.gray[4]};
   border-top: none;
