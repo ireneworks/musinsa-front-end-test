@@ -4,21 +4,24 @@ import { formatPrice } from "../../../../modules/format/price";
 import * as S from "./styles";
 
 export default function Product({
-  imageUrl,
   brandName,
+  imageUrl,
   goodsName,
   price,
-  saleRate,
   normalPrice,
+  saleRate,
+  isSale = false,
+  isSoldOut,
+  isExclusive = false,
   linkUrl,
-  isSale = true,
+  brandLinkUrl,
 }: Product) {
   return (
     <S.ProductContainer>
       <S.ProductDetailLink href={linkUrl}>
-        <ExclusiveBadge>단독</ExclusiveBadge>
         <S.ProductImage src={imageUrl} alt={goodsName} />
         <ProductInfo>
+          {isExclusive && <ExclusiveBadge>단독</ExclusiveBadge>}
           <dl className="name-wrapper">
             <dt>{brandName}</dt>
             <dd>{goodsName}</dd>
@@ -42,8 +45,8 @@ export default function Product({
 
 const ExclusiveBadge = styled.div`
   position: absolute;
+  top: -17px;
   left: 10px;
-  bottom: 131px;
   padding: 4px 6px;
   background: ${colors.green};
   font-size: 12px;
@@ -53,16 +56,17 @@ const ExclusiveBadge = styled.div`
 `;
 
 const ProductInfo = styled.div`
+  position: relative;
   width: 100%;
   height: 140px;
   padding: 20px 10px;
   box-sizing: border-box;
-  background: ${colors.gray[1]};
 
   dl.name-wrapper {
     margin: 0 0 4px;
     padding: 0;
     color: ${colors.black};
+    overflow: hidden;
 
     dt {
       margin-bottom: 8px;

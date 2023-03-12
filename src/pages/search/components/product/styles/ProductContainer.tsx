@@ -1,10 +1,14 @@
 import styled from "styled-components";
 
 export const ProductContainer = styled.li`
-  position: relative;
-  flex: 1 1 33.3%;
+  flex: 0 1 50%;
+  width: 50%;
   display: block;
   contain: content;
-  width: 100%;
   height: auto;
+
+  @media screen and (min-width: 760px) {
+    flex: 0 1 33.3%;
+    width: 33.3%;
+  }
 `;

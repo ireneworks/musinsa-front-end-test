@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const FilterList = styled.div`
+export const FilterList = styled.ul`
   display: flex;
   justify-content: space-between;
   align-items: center;

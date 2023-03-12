@@ -1,87 +1,68 @@
 import Chip from "./components/Chip";
 import Tag from "./components/Tag";
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import { isEmpty } from "../../../../modules/typeGuard/typeGuard";
 import * as S from "./styles";
 import SearchBar from "./components/SearchBar";
+import { EXCLUSIVE, SALE, SOLD_OUT } from "../../../../services/constants";
 
-type FilterCategory = "세일상품" | "단독상품" | "품절포함";
-type Filter<T> = T | string;
+interface Props {
+  filter: Filter<FilterCategory>[];
+  productList: Product[];
+  onChange: (value: React.MouseEvent<HTMLButtonElement>) => void;
+  onDelete: (value: React.MouseEvent<HTMLButtonElement>) => void;
+  onReset: () => void;
+}
 
-export default function Filter() {
-  const [isSearch, setIsSearch] = useState(false);
-  const [selectedFilters, setSelectedFilter] = useState<
-    Filter<FilterCategory>[]
-  >([]);
+export default function Filter({
+  productList,
+  filter,
+  onDelete,
+  onReset,
+  onChange,
+}: Props) {
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
 
-  const onSearch = () => {
-    setIsSearch(!isSearch);
+  const onClickSearch = () => {
+    setIsSearchOpen(!isSearchOpen);
   };
-
-  const findFilter = (target: Filter<FilterCategory>): boolean => {
-    return selectedFilters.includes(target);
-  };
-
-  const deleteFilter = useCallback(
-    (target: Filter<FilterCategory>) => {
-      const result = selectedFilters.filter((filter) => filter !== target);
-      setSelectedFilter(result);
-    },
-    [selectedFilters]
-  );
-
-  const onSelectFilter = ({
-    currentTarget,
-  }: React.MouseEvent<HTMLButtonElement>) => {
-    if (findFilter(currentTarget.value)) {
-      deleteFilter(currentTarget.value);
-      return;
-    }
-    setSelectedFilter([...selectedFilters, currentTarget.value]);
-  };
-
-  const onDeleteFilter = ({
-    currentTarget,
-  }: React.MouseEvent<HTMLButtonElement>) => {
-    deleteFilter(currentTarget.value);
-  };
-
-  const onReset = () => {
-    setSelectedFilter([]);
+  const findFilter = (target: FilterCategory): boolean => {
+    return filter.includes(target);
   };
 
   return (
     <S.FilterContainer>
       <S.FilterWrapper>
-        <Chip label="검색" icon isActive={isSearch} onClick={onSearch} />
         <Chip
-          label="세일상품"
-          isActive={findFilter("세일상품")}
-          onClick={onSelectFilter}
+          label="검색"
+          icon
+          isActive={isSearchOpen}
+          onClick={onClickSearch}
+        />
+        <Chip label={SALE} isActive={findFilter(SALE)} onClick={onChange} />
+        <Chip
+          label={EXCLUSIVE}
+          isActive={findFilter(EXCLUSIVE)}
+          onClick={onChange}
         />
         <Chip
-          label="단독상품"
-          isActive={findFilter("단독상품")}
-          onClick={onSelectFilter}
-        />
-        <Chip
-          label="품절포함"
-          isActive={findFilter("품절포함")}
-          onClick={onSelectFilter}
+          label={SOLD_OUT}
+          isActive={findFilter(SOLD_OUT)}
+          onClick={onChange}
         />
       </S.FilterWrapper>
-      {!isEmpty(selectedFilters) && (
+      {!isEmpty(filter) && (
         <S.SelectedFilters>
           <S.FilterList>
-            {!isEmpty(selectedFilters) &&
-              selectedFilters.map((filter, index) => (
-                <Tag key={index} label={filter} onClick={onDeleteFilter} />
+            {!isEmpty(filter) &&
+              filter.map((filter, index) => (
+                <Tag key={index} label={filter} onClick={onDelete} />
               ))}
           </S.FilterList>
           <S.ResetButton onClick={onReset} />
         </S.SelectedFilters>
       )}
-      {isSearch && <SearchBar />}
+      {isSearchOpen && <SearchBar productList={productList} />}
     </S.FilterContainer>
   );
 }

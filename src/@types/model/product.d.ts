@@ -1,7 +1,7 @@
 interface Product {
   brandName?: string;
-  imageUrl?: string;
-  goodsName?: string;
+  imageUrl: string;
+  goodsName: string;
   price: number;
   normalPrice: number;
   isSale?: boolean;

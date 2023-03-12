@@ -9,6 +9,7 @@ interface Props {
   onClick: (value?: any) => void;
 }
 // TODO 고정 최소 넓이 주기
+// TODO value -> name 으로 변경
 export default function Chip({
   label,
   icon = false,
