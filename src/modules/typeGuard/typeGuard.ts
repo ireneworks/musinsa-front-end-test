@@ -7,3 +7,5 @@ export function isEmpty(arg: unknown) {
   }
   return isArray(arg) && arg.length <= 0;
 }
+
+//TODO length 체크로 변경

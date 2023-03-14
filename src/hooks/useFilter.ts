@@ -1,32 +1,25 @@
-import React, { useReducer } from "react";
+import { useReducer } from "react";
+import { FilterOption } from "../@types/model/filter";
 
-type State = Filter<FilterCategory>[];
+type State = FilterOption[];
 
 interface OnChangeFilter {
   type: "ON_CHANGE_FILTER";
-  value: string;
-}
-
-interface OnDeleteFilter {
-  type: "ON_DELETE_FILTER";
-  value: string;
+  payload: FilterOption;
 }
 
 interface OnRestFilter {
   type: "ON_RESET_FILTER";
 }
 
-type Actions = OnChangeFilter | OnDeleteFilter | OnRestFilter;
+type Actions = OnChangeFilter | OnRestFilter;
 
 function reducer(state: State, action: Actions) {
   switch (action.type) {
     case "ON_CHANGE_FILTER":
-      if (state.includes(action.value)) {
-        return state.filter((filter) => filter !== action.value);
-      }
-      return [...state, action.value];
-    case "ON_DELETE_FILTER":
-      return state.filter((filter) => filter !== action.value);
+      return state.some((filter) => filter.value === action.payload.value)
+        ? state.filter((filter) => filter.value !== action.payload.value)
+        : state.concat(action.payload);
     case "ON_RESET_FILTER":
       return [];
     default:
@@ -37,13 +30,10 @@ function reducer(state: State, action: Actions) {
 export default function useFilter() {
   const [state, dispatch] = useReducer(reducer, []);
 
-  const onChange = (event: React.MouseEvent<HTMLButtonElement>) =>
-    dispatch({ type: "ON_CHANGE_FILTER", value: event.currentTarget.value });
-
-  const onDelete = (event: React.MouseEvent<HTMLButtonElement>) =>
-    dispatch({ type: "ON_DELETE_FILTER", value: event.currentTarget.value });
+  const onChange = (payload: FilterOption) =>
+    dispatch({ type: "ON_CHANGE_FILTER", payload });
 
   const onReset = () => dispatch({ type: "ON_RESET_FILTER" });
 
-  return { state, onChange, onDelete, onReset } as const;
+  return { state, onChange, onReset };
 }

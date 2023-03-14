@@ -1,15 +1,16 @@
 import styled from "styled-components";
-import { colors } from "../../../../../styles/colors";
-import SearchIcon from "../../../../../components/assets/icons/Search.svg";
+import { Theme } from "../../../styles/theme";
+import SearchIcon from "../../../assets/icons/Search.svg";
+import React from "react";
 
 interface Props {
   label: string;
   icon?: boolean;
   isActive: boolean;
-  onClick: (value?: any) => void;
+  onClick: () => void;
 }
+
 // TODO 고정 최소 넓이 주기
-// TODO value -> name 으로 변경
 export default function Chip({
   label,
   icon = false,
@@ -17,28 +18,23 @@ export default function Chip({
   onClick,
 }: Props) {
   return (
-    <ChipContainer
-      isIcon={icon}
-      isActive={isActive}
-      onClick={onClick}
-      value={label}
-    >
+    <ChipButton isIcon={icon} isActive={isActive} onClick={onClick}>
       {label}
       {icon && <Icon />}
-    </ChipContainer>
+    </ChipButton>
   );
 }
 
-const ChipContainer = styled.button<{ isIcon: boolean; isActive: boolean }>`
+const ChipButton = styled.button<{ isIcon: boolean; isActive: boolean }>`
   flex: 0 1 auto;
   display: flex;
   align-items: center;
   gap: 3px;
   padding: 7px ${({ isIcon }) => (!isIcon ? "15px" : "11px")};
   border-radius: 18px;
-  border: 1px solid ${colors.gray[1]};
-  background: ${colors.white};
-  color: ${({ isActive }) => (!isActive ? colors.black : colors.blue)};
+  border: 1px solid ${Theme.gray[1]};
+  background: ${Theme.white};
+  color: ${({ isActive }) => (!isActive ? Theme.black : Theme.blue)};
   font-size: 14px;
   font-weight: 400;
   line-height: 21px;

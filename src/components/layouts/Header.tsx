@@ -8,10 +8,10 @@ interface Props {
 export default function Header({ children }: Props) {
   return (
     <>
-      <S.Container>
+      <S.Header>
         <S.Logo />
         {children}
-      </S.Container>
+      </S.Header>
       <S.Divider />
     </>
   );

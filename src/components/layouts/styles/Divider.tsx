@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import { colors } from "../../../styles/colors";
+import { Theme } from "../../../styles/theme";
 
 export const Divider = styled.div`
   width: 100%;
   height: 10px;
-  background: ${colors.gray[3]};
+  background: ${Theme.gray[3]};
 `;

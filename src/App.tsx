@@ -1,10 +1,10 @@
 import React from "react";
-import SearchPage from "./pages/search/SearchPage";
+import ProductList from "./pages/productList/ProductList";
 
 export default function App() {
   return (
     <>
-      <SearchPage />
+      <ProductList />
     </>
   );
 }

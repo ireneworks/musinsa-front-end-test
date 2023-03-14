@@ -5,7 +5,7 @@ interface Props {
   children: React.ReactNode;
 }
 
-export default function ProductList({ children }: Props) {
+export default function Content({ children }: Props) {
   return <Layout>{children}</Layout>;
 }
 

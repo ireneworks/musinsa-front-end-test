@@ -1,18 +1,17 @@
 import styled from "styled-components";
-import { colors } from "../../../../../styles/colors";
-import CloseIcon from "../../../../../components/assets/icons/Close.svg";
+import { Theme } from "../../../styles/theme";
+import CloseIcon from "../../../assets/icons/Close.svg";
+import React from "react";
 
 interface Props {
   label: string;
-  onClick: (value?: any) => void;
+  onClick: () => void;
 }
 
 export default function Tag({ label, onClick }: Props) {
   return (
     <TagContainer>
-      <TagContent value={label} onClick={onClick}>
-        {label}
-      </TagContent>
+      <TagButton onClick={onClick}>{label}</TagButton>
     </TagContainer>
   );
 }
@@ -24,16 +23,16 @@ const TagContainer = styled.li`
   padding: 4px 8px 4px 10px;
   border-radius: 4px;
   box-sizing: border-box;
-  background: ${colors.blue};
+  background: ${Theme.blue};
 `;
 
-const TagContent = styled.button`
+const TagButton = styled.button`
   display: flex;
   align-items: center;
   padding: 0 18px 0 0;
   background: transparent url(${CloseIcon}) top 2px right 0 / 14px no-repeat;
   border: none;
-  color: ${colors.white};
+  color: ${Theme.white};
   font-size: 12px;
   font-weight: 400;
   line-height: 18px;

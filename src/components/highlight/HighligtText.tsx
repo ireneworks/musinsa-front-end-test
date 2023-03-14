@@ -26,7 +26,7 @@ interface HighlightTextProps {
 export default function HighlightText({
   keyword,
   source,
-  color = "red",
+  color = "yellow",
 }: HighlightTextProps) {
   if (!isNotEmpty(keyword.trim())) {
     return <>{source}</>;
