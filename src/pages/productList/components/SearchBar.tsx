@@ -3,10 +3,11 @@ import { isEmpty } from "../../../modules/typeGuard/typeGuard";
 import styled from "styled-components";
 import { Theme } from "../../../styles/theme";
 import SearchIcon from "../../../assets/icons/Search.svg";
+import {ProductItem} from "../../../@types/dto/product";
 
 interface Props {
   searchQuery: string;
-  productList: Product[];
+  productList: ProductItem[];
   onChange: (payload: any) => void;
 }
 
@@ -34,8 +35,8 @@ export default function SearchBar({
     onChange("searchQuery");
   };
 
-  const onSubmit = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Enter") {
+  const onSubmit = ({ key }: React.KeyboardEvent<HTMLInputElement>) => {
+    if (key === "Enter") {
       setIsOpen(false);
     }
   };

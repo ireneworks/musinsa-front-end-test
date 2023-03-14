@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import getProductList from "../apis/productListApi";
-import Product from "../pages/productList/components/Product";
+import { ProductItem } from "../@types/dto/product";
 
 export default function useInfiniteScroll() {
   const [hasMoreItem, toggleHasMoreItem] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
-  const [productList, setProductList] = useState<Product[]>([]);
+  const [productList, setProductList] = useState<ProductItem[]>([]);
   const [page, setPage] = useState(0);
   const observerRef = useRef<HTMLDivElement>(null);
 

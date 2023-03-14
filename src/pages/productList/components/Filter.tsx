@@ -7,10 +7,11 @@ import RefreshIcon from "../../../assets/icons/Refresh.svg";
 import { FilterOption, filterOptions } from "../../../@types/model/filter";
 import { isEmpty } from "../../../modules/typeGuard/typeGuard";
 import Tag from "./Tag";
+import {ProductItem} from "../../../@types/dto/product";
 
 interface Props {
   filter: FilterOption[];
-  productList: Product[];
+  productList: ProductItem[];
   onChange: (payload: FilterOption) => void;
   onReset: () => void;
 }
@@ -23,24 +24,18 @@ export default function Filter({
 }: Props) {
   const [isSearchOpen, toggleSearch] = useState(false);
 
-  // const onClickSearch = () => {
-  //   toggleSearch(!isSearchOpen);
-  // };
+  const onSearch = () => {
+    toggleSearch(!isSearchOpen);
+  };
 
   return (
     <FilterContainer>
       <FilterWrapper>
-        {/*<Chip*/}
-        {/*  value="searchQuery"*/}
-        {/*  label="검색"*/}
-        {/*  icon*/}
-        {/*  isActive={filter.searchQuery.length !== 0 || isSearchOpen}*/}
-        {/*  onClick={onClickSearch}*/}
-        {/*/>*/}
+        <Chip label='검색' isActive={isSearchOpen} icon onClick={onSearch}/>
         {filterOptions.map(({ value, label }) => (
           <Chip
             label={label}
-            isActive={filter.some((item) => item.value === value)}
+            isActive={filter.some((filter) => filter.value === value)}
             onClick={() => onChange({ value, label })}
           />
         ))}

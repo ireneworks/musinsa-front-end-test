@@ -10,6 +10,7 @@ import EmptyIcon from "../../assets/icons/icon-general-empty.svg";
 import { isEmpty } from "../../modules/typeGuard/typeGuard";
 import LoadingBar from "./components/LoadingBar";
 import useInfiniteScroll from "../../hooks/useInfiniteScroll";
+import {ProductItem} from "../../@types/dto/product";
 
 export default function ProductList() {
   const { state: filter, onReset, onChange } = useFilter();
@@ -17,7 +18,7 @@ export default function ProductList() {
     useInfiniteScroll();
 
   const computedProductList = useMemo(() => {
-    let filteredProductList: Product[] = productList;
+    let filteredProductList: ProductItem[] = productList;
     if (filter.some((filter) => filter.value === "isSoldOut")) {
       filteredProductList = productList.filter((_) => true);
     }

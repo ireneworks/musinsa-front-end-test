@@ -7,6 +7,6 @@ export const filterOptions = [
 export type FilterOptionValue = "isSale" | "isExclusive" | "isSoldOut";
 
 export interface FilterOption {
-  value: FilterOptionValue;
   label: string;
+  value: FilterOptionValue;
 }

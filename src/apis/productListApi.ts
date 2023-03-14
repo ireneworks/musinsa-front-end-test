@@ -1,8 +1,9 @@
 import axios from "axios";
+import {ProductItem} from "../@types/dto/product";
 
 interface GetProductListResponse {
   hasMoreItem: boolean;
-  list: Product[];
+  list: ProductItem[];
 }
 
 export default async function getProductList(

@@ -2,6 +2,7 @@ import { Theme } from "../../../styles/theme";
 import { formatPrice } from "../../../modules/format/price";
 import styled from "styled-components";
 import React from "react";
+import {ProductItem} from "../../../@types/dto/product";
 
 export default function Product({
   brandName,
@@ -15,7 +16,8 @@ export default function Product({
   isExclusive = false,
   linkUrl,
   brandLinkUrl,
-}: Product) {
+}: ProductItem) {
+  //TODO type 설정
   const handleImageError = (event: any) => {
     event.target.src = placeholderImage;
   };
@@ -35,6 +37,7 @@ export default function Product({
           {isExclusive && <ExclusiveBadge>단독</ExclusiveBadge>}
           <ProductNameWrapper>
             <dt>
+              {/* TODO a안에 a */}
               <a href={brandLinkUrl}>{brandName}</a>
             </dt>
             <dd>{goodsName}</dd>
