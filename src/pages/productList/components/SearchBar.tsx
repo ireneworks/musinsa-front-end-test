@@ -11,8 +11,6 @@ interface Props {
   onChange: (payload: any) => void;
 }
 
-// TODO 서치 시 키워드 때문에 api 에러
-
 export default function SearchBar({
   productList,
   onChange,

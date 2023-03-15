@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import useFilter from "../../hooks/useFilter";
 import Header from "../../components/layouts/Header";
 import Filter from "./components/Filter";
@@ -10,35 +10,14 @@ import EmptyIcon from "../../assets/icons/icon-general-empty.svg";
 import { isEmpty } from "../../modules/typeGuard/typeGuard";
 import LoadingBar from "./components/LoadingBar";
 import useInfiniteScroll from "../../hooks/useInfiniteScroll";
-import {ProductItem} from "../../@types/dto/product";
+import { useComputedProductList } from "../../hooks/useComputedProductList";
 
 export default function ProductList() {
   const { state: filter, onReset, onChange } = useFilter();
   const { isLoading, productList, hasMoreItem, observerRef } =
     useInfiniteScroll();
 
-  const computedProductList = useMemo(() => {
-    let filteredProductList: ProductItem[] = productList;
-    if (filter.some((filter) => filter.value === "isSoldOut")) {
-      filteredProductList = productList.filter((_) => true);
-    }
-    // if (filter.isExclusive) {
-    //   filteredProductList = productList.filter(
-    //     (product) => product.isExclusive
-    //   );
-    // }
-    // if (filter.isSale) {
-    //   filteredProductList = productList.filter((product) => product.isSale);
-    // }
-    // if (filter.searchQuery) {
-    //   filteredProductList = productList.filter(
-    //     (product) =>
-    //       product.goodsName.includes(filter.searchQuery) ||
-    //       product.brandName.includes(filter.searchQuery)
-    //   );
-    // }
-    return filteredProductList;
-  }, [filter, productList]);
+  const computedProductList = useComputedProductList(productList, filter);
 
   return (
     <>

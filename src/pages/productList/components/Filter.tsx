@@ -7,7 +7,7 @@ import RefreshIcon from "../../../assets/icons/Refresh.svg";
 import { FilterOption, filterOptions } from "../../../@types/model/filter";
 import { isEmpty } from "../../../modules/typeGuard/typeGuard";
 import Tag from "./Tag";
-import {ProductItem} from "../../../@types/dto/product";
+import { ProductItem } from "../../../@types/dto/product";
 
 interface Props {
   filter: FilterOption[];
@@ -24,19 +24,21 @@ export default function Filter({
 }: Props) {
   const [isSearchOpen, toggleSearch] = useState(false);
 
-  const onSearch = () => {
-    toggleSearch(!isSearchOpen);
-  };
-
   return (
     <FilterContainer>
       <FilterWrapper>
-        <Chip label='검색' isActive={isSearchOpen} icon onClick={onSearch}/>
-        {filterOptions.map(({ value, label }) => (
+        <Chip
+          label="검색"
+          isActive={isSearchOpen}
+          icon
+          onClick={() => toggleSearch(!isSearchOpen)}
+        />
+        {filterOptions.map(({ type, label }, index) => (
           <Chip
+            key={index}
             label={label}
-            isActive={filter.some((filter) => filter.value === value)}
-            onClick={() => onChange({ value, label })}
+            isActive={filter.some((option) => option.type === type)}
+            onClick={() => onChange({ type, label })}
           />
         ))}
       </FilterWrapper>
@@ -44,11 +46,11 @@ export default function Filter({
         <SelectedFilters>
           <FilterList>
             {!isEmpty(filter) &&
-              filter.map((item, index) => (
+              filter.map((option, index) => (
                 <Tag
                   key={index}
-                  label={item.label}
-                  onClick={() => onChange(item)}
+                  label={option.label}
+                  onClick={() => onChange(option)}
                 />
               ))}
           </FilterList>
@@ -58,8 +60,9 @@ export default function Filter({
       {isSearchOpen && (
         <SearchBar
           productList={productList}
-          onChange={() => console.log("a")}
-          searchQuery={""}
+          onExecute={(label: string) =>
+            onChange({ label, type: "searchKeyword" })
+          }
         />
       )}
     </FilterContainer>

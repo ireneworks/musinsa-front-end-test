@@ -11,9 +11,9 @@ export default function Product({
   price,
   normalPrice,
   saleRate,
-  isSale = false,
+  isSale,
   isSoldOut = false,
-  isExclusive = false,
+  isExclusive,
   linkUrl,
   brandLinkUrl,
 }: ProductItem) {
@@ -27,7 +27,7 @@ export default function Product({
       <ProductLink href={linkUrl}>
         <ProductImageWrapper>
           {isSoldOut && (
-            <div>
+            <div className='sold-out'>
               <span>SOLD OUT</span>
             </div>
           )}
@@ -86,7 +86,7 @@ const ProductImageWrapper = styled.div`
   width: 100%;
   padding-top: 120%;
 
-  div {
+  div.sold-out {
     position: absolute;
     top: 0;
     left: 0;
@@ -101,6 +101,7 @@ const ProductImageWrapper = styled.div`
     font-size: 20px;
     font-weight: 500;
     line-height: 22px;
+    z-index: 1;
   }
 
   img {
@@ -123,6 +124,7 @@ const ExclusiveBadge = styled.div`
   font-weight: 400;
   line-height: 18px;
   color: ${Theme.white};
+  z-index: 2;
 `;
 
 const ProductInfo = styled.div`
