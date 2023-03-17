@@ -13,7 +13,7 @@ import { useFilteredProductList } from "../../hooks/useFilteredProductList";
 
 export default function ProductList() {
   const { state: filter, onReset, onChange } = useFilter();
-  const { isLoading, productList, hasMoreItem, observerRef } =
+  const { isLoaded, productList, hasMoreItem, observerRef } =
     useInfiniteScroll();
 
   const filteredProductList = useFilteredProductList(productList, filter);
@@ -35,8 +35,8 @@ export default function ProductList() {
           </EmptyPage>
         )}
         <ProductListWrapper>
-          {!isLoading &&
-            computedProductList.map((product, index) => (
+          {isLoaded &&
+            filteredProductList.map((product, index) => (
               <Product
                 key={index}
                 brandName={product.brandName}

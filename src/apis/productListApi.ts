@@ -1,5 +1,5 @@
 import axios from "axios";
-import {ProductItem} from "../@types/dto/product";
+import { ProductItem } from "../@types/dto/product";
 
 interface GetProductListResponse {
   hasMoreItem: boolean;
@@ -14,7 +14,7 @@ export default async function getProductList(
       `https://static.msscdn.net/musinsaUI/homework/data/goods${page}.json`
     );
     return {
-      hasMoreItem: page < 4,
+      hasMoreItem: page + 1 < 4,
       list: response.data.data.list,
     };
   } catch (error) {

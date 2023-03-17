@@ -24,9 +24,11 @@ export const useFilteredProductList = (
         ({ isExclusive }) => isExclusive
       );
     }
+
     if (selectedFilter("isSale")) {
       filteredProductList = filteredProductList.filter(({ isSale }) => isSale);
     }
+
     if (selectedFilter("searchKeyword")) {
       const keyword = filter.find((filter) => filter.type === "searchKeyword");
       if (keyword) {

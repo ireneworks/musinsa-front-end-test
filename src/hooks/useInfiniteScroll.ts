@@ -40,5 +40,11 @@ export default function useInfiniteScroll() {
     return () => observer.disconnect();
   }, [hasMoreItem, intersectHandler, page]);
 
-  return { isLoading, hasMoreItem, productList, observerRef };
+  return {
+    isLoading,
+    isLoaded: !isLoading,
+    hasMoreItem,
+    productList,
+    observerRef,
+  };
 }

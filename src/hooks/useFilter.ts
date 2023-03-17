@@ -42,9 +42,9 @@ function onChangeFilterReducer(state: State, payload: FilterOption) {
 function reducer(state: State, action: Actions) {
   switch (action.type) {
     case "ON_CHANGE_FILTER":
-      return state.some((filter) => filter.value === action.payload.value)
-        ? state.filter((filter) => filter.value !== action.payload.value)
-        : state.concat(action.payload);
+      return onChangeFilterReducer(state, action.payload);
+    case "ON_CHANGE_SEARCH":
+      return onChangeSearchReducer(state, action.payload);
     case "ON_RESET_FILTER":
       return [];
     default:
@@ -55,8 +55,13 @@ function reducer(state: State, action: Actions) {
 export default function useFilter() {
   const [state, dispatch] = useReducer(reducer, []);
 
-  const onChange = (payload: FilterOption) =>
-    dispatch({ type: "ON_CHANGE_FILTER", payload });
+  const onChange = (payload: FilterOption) => {
+    if (payload.type === "searchKeyword") {
+      dispatch({ type: "ON_CHANGE_SEARCH", payload });
+    } else {
+      dispatch({ type: "ON_CHANGE_FILTER", payload });
+    }
+  };
 
   const onReset = () => dispatch({ type: "ON_RESET_FILTER" });
 

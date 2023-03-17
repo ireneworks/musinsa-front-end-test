@@ -4,7 +4,11 @@ export const filterOptions = [
   { label: "품절포함", type: "isSoldOut" },
 ] as const;
 
-export type FilterOptionValue = "isSale" | "isExclusive" | "isSoldOut";
+export type FilterOptionType =
+  | "isSale"
+  | "isExclusive"
+  | "isSoldOut"
+  | "searchKeyword";
 
 export interface FilterOption {
   label: string;
