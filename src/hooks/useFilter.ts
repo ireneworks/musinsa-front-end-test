@@ -8,11 +8,36 @@ interface OnChangeFilter {
   payload: FilterOption;
 }
 
+interface OnChangeSearch {
+  type: "ON_CHANGE_SEARCH";
+  payload: FilterOption;
+}
+
 interface OnRestFilter {
   type: "ON_RESET_FILTER";
 }
 
-type Actions = OnChangeFilter | OnRestFilter;
+type Actions = OnChangeFilter | OnRestFilter | OnChangeSearch;
+
+function onChangeSearchReducer(state: State, payload: FilterOption) {
+  const isExist = state.some((filter) => filter.type === payload.type);
+
+  return isExist
+    ? payload.label.length !== 0
+      ? state.map((filter) => {
+          return filter.type === payload.type ? payload : filter;
+        })
+      : state.filter((filter) => filter.type !== payload.type)
+    : state.concat(payload);
+}
+
+function onChangeFilterReducer(state: State, payload: FilterOption) {
+  const isExist = state.some((filter) => filter.type === payload.type);
+
+  return isExist
+    ? state.filter((filter) => filter.type !== payload.type)
+    : state.concat(payload);
+}
 
 function reducer(state: State, action: Actions) {
   switch (action.type) {

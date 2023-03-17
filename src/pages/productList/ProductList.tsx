@@ -5,19 +5,18 @@ import Filter from "./components/Filter";
 import Content from "../../components/layouts/Content";
 import Product from "./components/Product";
 import styled from "styled-components";
-import { Theme } from "../../styles/theme";
+import { THEME } from "../../styles/theme";
 import EmptyIcon from "../../assets/icons/icon-general-empty.svg";
-import { isEmpty } from "../../modules/typeGuard/typeGuard";
 import LoadingBar from "./components/LoadingBar";
 import useInfiniteScroll from "../../hooks/useInfiniteScroll";
-import { useComputedProductList } from "../../hooks/useComputedProductList";
+import { useFilteredProductList } from "../../hooks/useFilteredProductList";
 
 export default function ProductList() {
   const { state: filter, onReset, onChange } = useFilter();
   const { isLoading, productList, hasMoreItem, observerRef } =
     useInfiniteScroll();
 
-  const computedProductList = useComputedProductList(productList, filter);
+  const filteredProductList = useFilteredProductList(productList, filter);
 
   return (
     <>
@@ -26,11 +25,11 @@ export default function ProductList() {
           filter={filter}
           onChange={onChange}
           onReset={onReset}
-          productList={computedProductList}
+          productList={filteredProductList}
         />
       </Header>
       <Content>
-        {!isLoading && isEmpty(computedProductList) && (
+        {isLoaded && filteredProductList.length === 0 && (
           <EmptyPage>
             <p>검색 결과 없음</p>
           </EmptyPage>
@@ -70,7 +69,7 @@ const ProductListWrapper = styled.ul`
   list-style: none;
   margin: 0 0 20px 0;
   padding: 0;
-  background: ${Theme.white};
+  background: ${THEME.white};
 `;
 
 const EmptyPage = styled.div`
@@ -86,7 +85,7 @@ const EmptyPage = styled.div`
     font-size: 14px;
     font-weight: 400;
     line-height: 21px;
-    color: ${Theme.gray[5]};
+    color: ${THEME.gray[5]};
   }
 `;
 

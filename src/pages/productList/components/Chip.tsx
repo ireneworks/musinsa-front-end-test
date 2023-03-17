@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Theme } from "../../../styles/theme";
+import { THEME } from "../../../styles/theme";
 import SearchIcon from "../../../assets/icons/Search.svg";
 import React from "react";
 
@@ -10,7 +10,6 @@ interface Props {
   onClick: () => void;
 }
 
-// TODO 고정 최소 넓이 주기
 export default function Chip({
   label,
   icon = false,
@@ -32,9 +31,9 @@ const ChipButton = styled.button<{ isIcon: boolean; isActive: boolean }>`
   gap: 3px;
   padding: 7px ${({ isIcon }) => (!isIcon ? "15px" : "11px")};
   border-radius: 18px;
-  border: 1px solid ${Theme.gray[1]};
-  background: ${Theme.white};
-  color: ${({ isActive }) => (!isActive ? Theme.black : Theme.blue)};
+  border: 1px solid ${THEME.gray[1]};
+  background: ${THEME.white};
+  color: ${({ isActive }) => (!isActive ? THEME.black : THEME.blue)};
   font-size: 14px;
   font-weight: 400;
   line-height: 21px;

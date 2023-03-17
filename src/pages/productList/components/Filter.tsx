@@ -2,10 +2,9 @@ import React, { useState } from "react";
 import Chip from "./Chip";
 import SearchBar from "./SearchBar";
 import styled from "styled-components";
-import { Theme } from "../../../styles/theme";
+import { THEME } from "../../../styles/theme";
 import RefreshIcon from "../../../assets/icons/Refresh.svg";
 import { FilterOption, filterOptions } from "../../../@types/model/filter";
-import { isEmpty } from "../../../modules/typeGuard/typeGuard";
 import Tag from "./Tag";
 import { ProductItem } from "../../../@types/dto/product";
 
@@ -29,7 +28,9 @@ export default function Filter({
       <FilterWrapper>
         <Chip
           label="검색"
-          isActive={isSearchOpen}
+          isActive={
+            isSearchOpen || filter.some(({ type }) => type === "searchKeyword")
+          }
           icon
           onClick={() => toggleSearch(!isSearchOpen)}
         />
@@ -42,15 +43,21 @@ export default function Filter({
           />
         ))}
       </FilterWrapper>
-      {!isEmpty(filter) && (
+      {filter.length > 0 && (
         <SelectedFilters>
           <FilterList>
-            {!isEmpty(filter) &&
+            {filter.length > 0 &&
               filter.map((option, index) => (
                 <Tag
                   key={index}
                   label={option.label}
-                  onClick={() => onChange(option)}
+                  onClick={() =>
+                    onChange(
+                      option.type !== "searchKeyword"
+                        ? option
+                        : { type: option.type, label: "" }
+                    )
+                  }
                 />
               ))}
           </FilterList>
@@ -72,7 +79,7 @@ export default function Filter({
 const FilterContainer = styled.div`
   width: 100%;
   height: auto;
-  background: ${Theme.white};
+  background: ${THEME.white};
 `;
 
 const FilterWrapper = styled.div`
@@ -83,7 +90,7 @@ const FilterWrapper = styled.div`
   height: 55px;
   padding: 10px 7px;
   box-sizing: border-box;
-  background: ${Theme.white};
+  background: ${THEME.white};
 `;
 
 const SelectedFilters = styled.div`
@@ -94,7 +101,7 @@ const SelectedFilters = styled.div`
   height: 50px;
   padding: 12px 0 12px 15px;
   box-sizing: border-box;
-  background: ${Theme.white};
+  background: ${THEME.white};
 `;
 
 const FilterList = styled.ul`
@@ -118,7 +125,7 @@ const ResetButton = styled.button`
   height: 50px;
   padding: 0;
   border: none;
-  background: ${Theme.white} url(${RefreshIcon}) center / 22px no-repeat;
+  background: ${THEME.white} url(${RefreshIcon}) center / 22px no-repeat;
   cursor: pointer;
   z-index: 1;
 `;

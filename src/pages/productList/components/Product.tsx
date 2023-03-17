@@ -1,8 +1,8 @@
-import { Theme } from "../../../styles/theme";
+import { THEME } from "../../../styles/theme";
 import { formatPrice } from "../../../modules/format/price";
 import styled from "styled-components";
 import React from "react";
-import {ProductItem} from "../../../@types/dto/product";
+import { ProductItem } from "../../../@types/dto/product";
 
 export default function Product({
   brandName,
@@ -11,35 +11,33 @@ export default function Product({
   price,
   normalPrice,
   saleRate,
-  isSale,
+  isSale = true,
   isSoldOut = false,
-  isExclusive,
+  isExclusive = false,
   linkUrl,
   brandLinkUrl,
 }: ProductItem) {
-  //TODO type 설정
-  const handleImageError = (event: any) => {
-    event.target.src = placeholderImage;
-  };
-
   return (
     <ProductContainer>
-      <ProductLink href={linkUrl}>
+      <ProductLink href={linkUrl} target="_blank">
         <ProductImageWrapper>
           {isSoldOut && (
-            <div className='sold-out'>
+            <div className="sold-out-wrapper">
               <span>SOLD OUT</span>
             </div>
           )}
-          <img src={imageUrl} alt={goodsName} onError={handleImageError} />
+          <img
+            src={imageUrl}
+            alt={goodsName}
+            onError={({ currentTarget }) =>
+              (currentTarget.src = placeholderImage)
+            }
+          />
         </ProductImageWrapper>
         <ProductInfo>
           {isExclusive && <ExclusiveBadge>단독</ExclusiveBadge>}
           <ProductNameWrapper>
-            <dt>
-              {/* TODO a안에 a */}
-              <a href={brandLinkUrl}>{brandName}</a>
-            </dt>
+            <dt>{brandName}</dt>
             <dd>{goodsName}</dd>
           </ProductNameWrapper>
           <PriceWrapper>
@@ -86,7 +84,7 @@ const ProductImageWrapper = styled.div`
   width: 100%;
   padding-top: 120%;
 
-  div.sold-out {
+  div.sold-out-wrapper {
     position: absolute;
     top: 0;
     left: 0;
@@ -97,7 +95,7 @@ const ProductImageWrapper = styled.div`
     align-items: center;
     background: rgba(255, 255, 255, 0.8);
     text-align: center;
-    color: ${Theme.gray[6]};
+    color: ${THEME.gray[6]};
     font-size: 20px;
     font-weight: 500;
     line-height: 22px;
@@ -119,11 +117,11 @@ const ExclusiveBadge = styled.div`
   top: -17px;
   left: 10px;
   padding: 4px 6px;
-  background: ${Theme.green};
+  background: ${THEME.green};
   font-size: 12px;
   font-weight: 400;
   line-height: 18px;
-  color: ${Theme.white};
+  color: ${THEME.white};
   z-index: 2;
 `;
 
@@ -138,7 +136,7 @@ const ProductInfo = styled.div`
 const ProductNameWrapper = styled.dl`
   margin: 0 0 4px;
   padding: 0;
-  color: ${Theme.black};
+  color: ${THEME.black};
 
   dt {
     margin-bottom: 8px;
@@ -149,20 +147,6 @@ const ProductNameWrapper = styled.dl`
     overflow: hidden;
     text-overflow: ellipsis;
     word-break: break-all;
-
-    a {
-      width: 100%;
-      padding: 0;
-      border: none;
-      background: none;
-      text-align: left;
-      font-weight: 400;
-      font-size: 11px;
-      line-height: 16px;
-      text-decoration: none;
-      color: ${Theme.black};
-      cursor: pointer;
-    }
   }
 
   dd {
@@ -180,7 +164,7 @@ const ProductNameWrapper = styled.dl`
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
 
-    color: ${Theme.black};
+    color: ${THEME.black};
   }
 `;
 
@@ -193,7 +177,7 @@ const PriceWrapper = styled.dl`
     font-size: 11px;
     font-weight: 500;
     line-height: 12px;
-    color: ${Theme.gray[5]};
+    color: ${THEME.gray[5]};
   }
 
   dd {
@@ -205,10 +189,10 @@ const PriceWrapper = styled.dl`
     line-height: 24px;
 
     span.sale-price {
-      color: ${Theme.black};
+      color: ${THEME.black};
     }
     span.sale-rate {
-      color: ${Theme.red};
+      color: ${THEME.red};
     }
   }
 `;

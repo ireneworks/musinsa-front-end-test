@@ -1,21 +1,18 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { isEmpty } from "../../../modules/typeGuard/typeGuard";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import styled from "styled-components";
-import { Theme } from "../../../styles/theme";
+import { THEME } from "../../../styles/theme";
 import SearchIcon from "../../../assets/icons/Search.svg";
-import {ProductItem} from "../../../@types/dto/product";
+import { ProductItem } from "../../../@types/dto/product";
+import HighlightText from "./HighligtText";
 
 interface Props {
-  searchQuery: string;
   productList: ProductItem[];
-  onChange: (payload: any) => void;
+  onExecute(search: string): void;
 }
 
-export default function SearchBar({
-  productList,
-  onChange,
-  searchQuery,
-}: Props) {
+export default function SearchBar({ productList, onExecute }: Props) {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [searchKeyword, setSearchKeyword] = useState("");
   const [isOpen, setIsOpen] = useState(false);
 
   const productNameList = useMemo(() => {
@@ -24,23 +21,29 @@ export default function SearchBar({
 
   const matchedProducts = useMemo(() => {
     return productNameList.filter((productName) =>
-      productName.toUpperCase().includes(searchQuery.toUpperCase())
+      productName.toUpperCase().includes(searchKeyword.toUpperCase())
     );
-  }, [searchQuery, productNameList]);
+  }, [productNameList, searchKeyword]);
 
-  const onClick = ({ currentTarget }: React.MouseEvent<HTMLButtonElement>) => {
+  const onClick = (search: string) => {
+    onExecute(search);
     setIsOpen(false);
-    onChange("searchQuery");
+    inputRef.current?.blur();
+    setSearchKeyword("");
   };
 
-  const onSubmit = ({ key }: React.KeyboardEvent<HTMLInputElement>) => {
+  const onKeyPressHandler = ({
+    key,
+  }: React.KeyboardEvent<HTMLInputElement>) => {
     if (key === "Enter") {
       setIsOpen(false);
+      onExecute(searchKeyword);
+      setSearchKeyword("");
     }
   };
 
   useEffect(() => {
-    if (!isEmpty(matchedProducts) && searchQuery !== "") {
+    if (matchedProducts.length > 0 && searchKeyword !== "") {
       setIsOpen(true);
       return;
     }
@@ -50,20 +53,23 @@ export default function SearchBar({
   return (
     <SearchBarContainer>
       <Input
+        ref={inputRef}
         placeholder="상품명 검색"
-        value={searchQuery}
-        onChange={({ currentTarget }) => onChange("searchQuery")}
-        onKeyPress={onSubmit}
-        onBlur={() => setIsOpen(!isOpen)}
+        value={searchKeyword}
+        onChange={({ currentTarget }) => setSearchKeyword(currentTarget.value)}
+        onKeyPress={onKeyPressHandler}
       />
       {isOpen && (
         <AutoComplete>
           <ul>
-            {!isEmpty(matchedProducts) &&
+            {matchedProducts.length > 0 &&
               matchedProducts.map((productName, index) => (
                 <li key={index}>
-                  <button onClick={onClick} value={productName}>
-                    {productName}
+                  <button onClick={() => onClick(productName)}>
+                    <HighlightText
+                      keyword={searchKeyword}
+                      source={productName}
+                    />
                   </button>
                 </li>
               ))}
@@ -77,7 +83,7 @@ export default function SearchBar({
 const SearchBarContainer = styled.div`
   width: 100%;
   padding: 20px 15px;
-  background: ${Theme.gray[2]};
+  background: ${THEME.gray[2]};
   box-sizing: border-box;
 `;
 
@@ -86,16 +92,16 @@ const Input = styled.input`
   width: 100%;
   height: 40px;
   padding: 8px 10px 8px 36px;
-  border: 1px solid ${Theme.gray[4]};
+  border: 1px solid ${THEME.gray[4]};
   box-sizing: border-box;
-  background: ${Theme.white} url(${SearchIcon}) top 6px left 10px /22px no-repeat;
-  color: ${Theme.black};
+  background: ${THEME.white} url(${SearchIcon}) top 6px left 10px /22px no-repeat;
+  color: ${THEME.black};
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
 
   &::placeholder {
-    color: ${Theme.gray[5]};
+    color: ${THEME.gray[5]};
     font-size: 16px;
     font-weight: 400;
     line-height: 24px;
@@ -107,8 +113,8 @@ const AutoComplete = styled.div`
   left: 15px;
   right: 15px;
   max-height: 160px;
-  background: ${Theme.white};
-  border: 1px solid ${Theme.gray[4]};
+  background: ${THEME.white};
+  border: 1px solid ${THEME.gray[4]};
   border-top: none;
   overflow-x: hidden;
   z-index: 2;
@@ -124,7 +130,7 @@ const AutoComplete = styled.div`
       cursor: pointer;
 
       &:hover {
-        background: ${Theme.gray[3]};
+        background: ${THEME.gray[3]};
       }
 
       button {
@@ -134,7 +140,7 @@ const AutoComplete = styled.div`
         border: none;
         background: none;
         text-align: left;
-        color: ${Theme.black};
+        color: ${THEME.black};
         font-size: 16px;
         font-weight: 400;
         line-height: 24px;

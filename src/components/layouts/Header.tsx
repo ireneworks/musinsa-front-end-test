@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import {Theme} from "../../styles/theme";
+import { THEME } from "../../styles/theme";
 import logo from "../../assets/logo/logo_musinsa.png";
 
 interface Props {
@@ -26,11 +26,11 @@ const HeaderContainer = styled.header`
 const Logo = styled.div`
   width: 100%;
   height: 50px;
-  background: ${Theme.white} url(${logo}) center / auto 16px no-repeat;
+  background: ${THEME.white} url(${logo}) center / auto 16px no-repeat;
 `;
 
 const Divider = styled.div`
   width: 100%;
   height: 10px;
-  background: ${Theme.gray[3]};
+  background: ${THEME.gray[3]};
 `;

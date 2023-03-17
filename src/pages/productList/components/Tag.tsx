@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Theme } from "../../../styles/theme";
+import { THEME } from "../../../styles/theme";
 import CloseIcon from "../../../assets/icons/Close.svg";
 import React from "react";
 
@@ -23,7 +23,7 @@ const TagContainer = styled.li`
   padding: 4px 8px 4px 10px;
   border-radius: 4px;
   box-sizing: border-box;
-  background: ${Theme.blue};
+  background: ${THEME.blue};
 `;
 
 const TagButton = styled.button`
@@ -32,7 +32,7 @@ const TagButton = styled.button`
   padding: 0 18px 0 0;
   background: transparent url(${CloseIcon}) top 2px right 0 / 14px no-repeat;
   border: none;
-  color: ${Theme.white};
+  color: ${THEME.white};
   font-size: 12px;
   font-weight: 400;
   line-height: 18px;

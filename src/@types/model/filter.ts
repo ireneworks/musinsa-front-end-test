@@ -8,5 +8,5 @@ export type FilterOptionValue = "isSale" | "isExclusive" | "isSoldOut";
 
 export interface FilterOption {
   label: string;
-  type: FilterOptionValue;
+  type: FilterOptionType;
 }
