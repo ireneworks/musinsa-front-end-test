@@ -1,37 +1,37 @@
 # Musinsa Frontend Test
 
-## 실행 방법
+## Get Started
 
-1. 의존성 설치하기
+1. Installation
 ```
 $ npm install
 ```
 
-2. 프로젝트 시작하기
+2. Starting the Project
 ```
 $ npm start
 ```
 
-## 프로젝트 파일구조
+## Project Directory Structure
 ```
-┌── src    
+┌── src
 │   ├── @types
-│   │    ├── dto              (데이터 전송 객체 타입들의 집합)
-│   │    ├── model            (도메인별 타입들의 집합)
-│   │    ├── utility          (유틸성 타입들의 집합)
-│   ├──  apis                 (도메인별 페이지 안에서 호출하는 api 로직들)
-│   ├── assets                (전역적으로 사용되는 공통 이미지들의 집합)
-│   ├── components            (전역적으로 사용되는 공통 컴포넌트들의 집합)
+│   │   ├── dto                 (Collection of Data Transfer Object types)
+│   │   ├── model               (Collection of domain-specific types)
+│   │   └── utility             (Collection of utility types)
+│   ├── apis                    (API logic called within domain-specific pages)
+│   ├── assets                  (Collection of common images used globally)
+│   ├── components              (Collection of common components used globally)
 │   ├── hooks
-│   ├── modules               (비즈니스 로직과는 상관없는 유틸성 함수들의 집합)         
-│   ├── pages                 (페이지 내 컴포넌트들의 집합)
-│   │    ├── [domain page]       
-│   │    │     └── components (해당 페이지 안에서만 사용되는 컴포넌트들의 집합)   
-│   └── styles                (각 컴포넌트 내에서 사용되는 공통 스타일 변수들의 집합)
+│   ├── modules                 (Collection of utility functions unrelated to business logic)
+│   ├── pages                   (Collection of components within pages)
+│   │   ├── [domain page]
+│   │   │   └── components      (Collection of components used only within that page)
+│   └── styles                  (Collection of common style variables used within each component)
 ```
 
 
-## 사용 라이브러리
+## Dependencies
 - react
 - typescript
 - styled-component
