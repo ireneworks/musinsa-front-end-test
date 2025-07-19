@@ -31,7 +31,7 @@ $ npm start
 ```
 
 
-## Dependencies
+## Packages
 - react
 - typescript
 - styled-component
